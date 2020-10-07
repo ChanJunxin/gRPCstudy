@@ -3,11 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
-	"google.golang.org/grpc"
 	"grpcstudy/demo17/client/helper"
 	. "grpcstudy/demo17/client/service"
 	"io"
 	"log"
+	"google.golang.org/grpc"
 )
 
 func main() {
@@ -27,15 +27,18 @@ func main() {
 		req.Users = append(req.Users, &UserInfo{UserId: i})
 	}
 	stream, err := userClient.GetUserScoreByServerStream(ctx, &req)
-	if err!=nil{
+	if err != nil {
 		log.Fatal(err)
 	}
-	for{
+
+	//需要循环读取，服务器停止才退出
+	for {
 		res, err := stream.Recv()
-		if err == io.EOF{
+		//服务端发送结束
+		if err == io.EOF {
 			break
 		}
-		if err != nil{
+		if err != nil {
 			log.Fatal(err)
 		}
 		fmt.Println(res.Users)

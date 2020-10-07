@@ -14,22 +14,22 @@ func (this *ProdService) GetProdStock(ctx context.Context, req *ProdRequest) (*P
 	case ProdAreas_B:
 		stock = 31 //B区库存31个
 	case ProdAreas_C:
-		stock = 50 //C区库存50
+		stock = 50 //B区库存31个
 	default:
-		stock = 102 //默认A区，库存102
+		stock = 102 //B区库存31个
 	}
 	return &ProdResponse{ProdStock: stock}, nil
 }
 
 func (this *ProdService) GetProdStocks(ctx context.Context, size *QuerySize) (*ProdResponseList, error) {
-	Prodres := []*ProdResponse{
+	myProdres := []*ProdResponse{
 		&ProdResponse{ProdStock: 12},
 		&ProdResponse{ProdStock: 13},
 		&ProdResponse{ProdStock: 14},
 	}
-	return &ProdResponseList{Prodres: Prodres,}, nil
+	return &ProdResponseList{Prodres: myProdres}, nil
 }
 
 func (this *ProdService) GetProdInfo(ctx context.Context, in *ProdRequest) (*ProdModel, error) {
-	return &ProdModel{ProdId: 101, ProdName: "测试商品", ProdPrice: 20.5,}, nil
+	return &ProdModel{ProdId: 101, ProdName: "测试商品", ProdPrice: 20.5}, nil
 }

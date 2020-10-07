@@ -23,7 +23,8 @@ func (*UserService) GetUserScore(ctx context.Context, in *UserScoreRequest) (*Us
 }
 
 //服务端流式响应
-func (*UserService) GetUserScoreByServerStream(in *UserScoreRequest, stream UserService_GetUserScoreByServerStreamServer) error {
+func (*UserService) GetUserScoreByServerStream(in *UserScoreRequest,
+	stream UserService_GetUserScoreByServerStreamServer) error {
 	var score int32 = 101
 	users := make([]*UserInfo, 0)
 	for index, user := range in.Users {
@@ -45,6 +46,7 @@ func (*UserService) GetUserScoreByServerStream(in *UserScoreRequest, stream User
 	}
 	return nil
 }
+
 //客户端流
 func (*UserService) GetUserScoreByClientStream(stream UserService_GetUserScoreByClientStreamServer) error {
 	var score int32 = 101
@@ -64,8 +66,9 @@ func (*UserService) GetUserScoreByClientStream(stream UserService_GetUserScoreBy
 		}
 	}
 }
+
 //双向流
-func (*UserService) GetUserScoreByTWS(stream UserService_GetUserScoreByTWSServer) error{
+func (*UserService) GetUserScoreByTWS(stream UserService_GetUserScoreByTWSServer) error {
 	var score int32 = 101
 	users := make([]*UserInfo, 0)
 	for {
@@ -81,8 +84,8 @@ func (*UserService) GetUserScoreByTWS(stream UserService_GetUserScoreByTWSServer
 			score++
 			users = append(users, user)
 		}
-		err = stream.Send(&UserScoreResponse{Users:users})
-		if err != nil{
+		err = stream.Send(&UserScoreResponse{Users: users})
+		if err != nil {
 			log.Println(err)
 		}
 		users = (users)[0:0]

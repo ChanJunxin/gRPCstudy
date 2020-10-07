@@ -26,7 +26,16 @@ func main() {
 		fmt.Println(err)
 	}*/
 	timeProto:=&timestamp.Timestamp{Seconds:timeGo.Unix()}
-	res, err := orderClient.NewOrder(context.Background(), &OrderMain{OrderId: 31456, OrderNo: "bj009", UserId: 2048, OrderMoney: 349.90, OrderTime: timeProto})
+
+	res, err := orderClient.NewOrder(context.Background(), 
+				&OrderMain{
+					OrderId: 31456, 
+					OrderNo: "bj009", 
+					UserId: 2048, 
+					OrderMoney: 349.90, 
+					OrderTime: timeProto
+				})
+
 	if err != nil{
 		log.Fatal(err)
 	}

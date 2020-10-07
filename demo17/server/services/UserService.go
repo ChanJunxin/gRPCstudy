@@ -20,7 +20,7 @@ func (*UserService) GetUserScore(ctx context.Context, in *UserScoreRequest) (*Us
 	return &UserScoreResponse{Users: users}, nil
 }
 
-//服务端流式响应
+//服务端流式响应，UserService_GetUserScoreByServerStreamServer类型可以发送内容
 func (*UserService) GetUserScoreByServerStream(in *UserScoreRequest, stream UserService_GetUserScoreByServerStreamServer) error {
 	var score int32 = 101
 	users := make([]*UserInfo, 0)
@@ -29,11 +29,13 @@ func (*UserService) GetUserScoreByServerStream(in *UserScoreRequest, stream User
 		score++
 		users = append(users, user)
 
+		//每隔两条发送
 		if (index+1)%2 == 0 && index > 0 {
 			err := stream.Send(&UserScoreResponse{Users: users})
 			if err != nil {
 				return err
 			}
+			//清空切片
 			users = (users)[0:0]
 		}
 		time.Sleep(1 * time.Second)

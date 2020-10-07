@@ -2,6 +2,9 @@ syntax = "proto3";
 
 package services;
 import "google/api/annotations.proto";
+//引用报红也可以生成
+
+option  go_package = ".;services";
 
 message ProdRequest{
   int32 prod_id= 1;//传入的商品id
